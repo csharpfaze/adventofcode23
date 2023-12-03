@@ -61,7 +61,7 @@ public class UnitTest2
 
         var record = new GameRecord(lines.First(l => l.StartsWith($"Game {id}:")));
         Assert.IsTrue(record.Id == id);
-        var minimumBag = record.AtLeastNecessary(bag);
+        var minimumBag = record.AtLeastNecessary();
         Assert.IsTrue(minimumBag.First(b => b.Color == Color.Red).Amount == reds);
         Assert.IsTrue(minimumBag.First(b => b.Color == Color.Green).Amount == greens);
         Assert.IsTrue(minimumBag.First(b => b.Color == Color.Blue).Amount == blues);
