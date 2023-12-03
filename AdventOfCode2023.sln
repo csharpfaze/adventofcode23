@@ -11,6 +11,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day01Fs", "Fsharp\Day01\Day
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day02", "Day02\Day02.csproj", "{1880BFCA-7B3D-415B-99F3-2F37D636855B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fsharp", "Fsharp", "{B96F7284-4F1E-4D36-BEDF-D46E1364528E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Day02Fs", "Fsharp\Day02\Day02Fs.fsproj", "{188665B7-C783-4FD0-A487-9DE961E19A2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,12 @@ Global
 		{1880BFCA-7B3D-415B-99F3-2F37D636855B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1880BFCA-7B3D-415B-99F3-2F37D636855B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1880BFCA-7B3D-415B-99F3-2F37D636855B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{188665B7-C783-4FD0-A487-9DE961E19A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{188665B7-C783-4FD0-A487-9DE961E19A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{188665B7-C783-4FD0-A487-9DE961E19A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{188665B7-C783-4FD0-A487-9DE961E19A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{188665B7-C783-4FD0-A487-9DE961E19A2C} = {B96F7284-4F1E-4D36-BEDF-D46E1364528E}
 	EndGlobalSection
 EndGlobal

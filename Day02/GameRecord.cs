@@ -64,7 +64,7 @@ public class GameRecord
         return true;
     }
 
-    public IEnumerable<Draw> AtLeastNecessary(IEnumerable<Draw> bag)
+    public IEnumerable<Draw> AtLeastNecessary()
     {
         var reds = Draws.Where(d => d.Color == Color.Red).Max(d => d.Amount);
         var greens = Draws.Where(d => d.Color == Color.Green).Max(d => d.Amount);

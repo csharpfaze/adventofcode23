@@ -30,7 +30,7 @@ internal class Program
 
         foreach (var line in lines)
         {
-            powerSum += GameRecord.GetPower(new GameRecord(line).AtLeastNecessary(bag));
+            powerSum += GameRecord.GetPower(new GameRecord(line).AtLeastNecessary());
         }
 
         System.Console.WriteLine(powerSum);
