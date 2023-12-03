@@ -10,3 +10,8 @@ var validator = new EngineValidator(lines);
 var parts = validator.GetEngineParts();
 
 System.Console.WriteLine(parts.Sum());
+
+
+var gears = validator.GetGears();
+
+System.Console.WriteLine(gears.Select(x => x.GetRatio()).Sum());

@@ -44,36 +44,60 @@ public class EngineValidator
         return arr.ToArray();
     }
 
-    private bool IsSymbolAdjacent(int x, int y, Func<char, bool> symbolValidator = null)
+    private bool IsSymbolAdjacent(int x, int y, out (int, int) symbolPosition, Func<char, bool> symbolValidator = null)
     {
         if (symbolValidator == null)
             symbolValidator = IsSymbol;
         var symbolHere = false;
+        symbolPosition = default;
         //l
         if (CanMoveLeft(x) && symbolValidator(chars[y][x - 1]))
+        {
+            symbolPosition = (x - 1, y);
             symbolHere = true;
+        }
         //r
         else if (CanMoveRight(x, y) && symbolValidator(chars[y][x + 1]))
+        {
+            symbolPosition = (x + 1, y);
             symbolHere = true;
+        }
         //up
         else if (CanMoveUp(y) && symbolValidator(chars[y - 1][x]))
+        {
+            symbolPosition = (x, y - 1);
             symbolHere = true;
+        }
         //d
         else if (CanMoveDown(y) && symbolValidator(chars[y + 1][x]))
+        {
+            symbolPosition = (x, y + 1);
             symbolHere = true;
+        }
         //lu
         else if (CanMoveUp(y) && CanMoveLeft(x) && symbolValidator(chars[y - 1][x - 1]))
+        {
+            symbolPosition = (x - 1, y - 1);
             symbolHere = true;
+        }
         //ru
         else if (CanMoveUp(y) && CanMoveRight(x, y) && symbolValidator(chars[y - 1][x + 1]))
+        {
+            symbolPosition = (x + 1, y - 1);
             symbolHere = true;
+        }
         //ld
         else if (CanMoveDown(y) && CanMoveLeft(x) && symbolValidator(chars[y + 1][x - 1]))
+        {
+            symbolPosition = (x - 1, y + 1);
             symbolHere = true;
+        }
         //rd
         else if (CanMoveDown(y) && CanMoveRight(x, y) && symbolValidator(chars[y + 1][x + 1]))
+        {
+            symbolPosition = (x + 1, y + 1);
             symbolHere = true;
-
+        }
         return symbolHere;
     }
 
@@ -108,7 +132,7 @@ public class EngineValidator
     {
         for (int i = number.StartIndex; i <= number.EndIndex; i++)
         {
-            if (IsSymbolAdjacent(i, y))
+            if (IsSymbolAdjacent(i, y, out _))
                 return true;
         }
         return false;
@@ -141,12 +165,80 @@ public class EngineValidator
         }
         return Convert.ToInt32(val);
     }
+
+    private bool IsGear(char c)
+    {
+        return c == '*';
+    }
+    private bool IsGearNumber(Number number, int y, out (int, int) conn)
+    {
+        for (int i = number.StartIndex; i <= number.EndIndex; i++)
+        {
+            if (IsSymbolAdjacent(i, y, out conn, IsGear))
+            {
+                return true;
+            }
+        }
+        conn = default;
+        return false;
+    }
+    public IEnumerable<Gear> GetGears()
+    {
+        var parts = new List<GearPart>();
+        for (int y = 0; y < chars.Length; y++)
+        {
+            var line = chars[y];
+            var numbers = FindNumbers(line);
+            foreach (var number in numbers)
+            {
+                if (IsGearNumber(number, y, out var conn))
+                {
+                    parts.Add(new GearPart { Number = number, Conneciton = (conn.Item1, conn.Item2) });
+                }
+            }
+        }
+        return ConstructGears(parts);
+    }
+
+    private IEnumerable<Gear> ConstructGears(IEnumerable<GearPart> parts)
+    {
+        var gears = new List<Gear>();
+        foreach (var part in parts)
+        {
+            if (!part.Linked)
+            {
+                var match = parts.Where(p => p.Conneciton == part.Conneciton);
+                if (match.Count() > 1)
+                {
+                    var m1 = match.First();
+                    var m2 = match.ElementAt(1);
+                    m1.Linked = true;
+                    m2.Linked = true;
+                    gears.Add(new Gear { Part1 = m1.Number, Part2 = m2.Number });
+                }
+            }
+        }
+        return gears;
+    }
 }
 
 public class Gear
 {
     public Number Part1 { get; set; }
     public Number Part2 { get; set; }
+
+    public int GetRatio()
+    {
+        return Part1.Value * Part2.Value;
+    }
+}
+
+public class GearPart
+{
+    public Number Number { get; set; }
+    public (int x, int y) Conneciton { get; set; }
+
+    public bool Linked { get; set; }
 }
 
 public class Number

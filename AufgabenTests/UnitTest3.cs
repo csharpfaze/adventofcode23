@@ -20,10 +20,16 @@ public class UnitTest3
     }
 
 
-    // [TestMethod]
-    // public void ValidateGearsSampleTest()
-    // {
-    //     var parts = engineValidator?.GetGears();
-    //     Assert.AreEqual(parts?.Pro(), 16345);
-    // }
+    [TestMethod]
+    public void ValidateGearsSampleTest()
+    {
+        var gears = engineValidator?.GetGears();
+        Assert.IsNotNull(gears);
+        var gearRatio1 = gears.First().GetRatio();
+        Assert.AreEqual(gearRatio1, 16345);
+        var gearRatio2 = gears.ElementAt(1).GetRatio();
+        Assert.AreEqual(gearRatio2, 451490);
+
+        Assert.AreEqual(gearRatio1 + gearRatio2, 467835);
+    }
 }
