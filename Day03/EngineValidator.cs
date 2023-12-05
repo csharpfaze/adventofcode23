@@ -48,57 +48,56 @@ public class EngineValidator
     {
         if (symbolValidator == null)
             symbolValidator = IsSymbol;
-        var symbolHere = false;
         symbolPosition = default;
         //l
         if (CanMoveLeft(x) && symbolValidator(chars[y][x - 1]))
         {
             symbolPosition = (x - 1, y);
-            symbolHere = true;
+            return true;
         }
         //r
         else if (CanMoveRight(x, y) && symbolValidator(chars[y][x + 1]))
         {
             symbolPosition = (x + 1, y);
-            symbolHere = true;
+            return true;
         }
         //up
         else if (CanMoveUp(y) && symbolValidator(chars[y - 1][x]))
         {
             symbolPosition = (x, y - 1);
-            symbolHere = true;
+            return true;
         }
         //d
         else if (CanMoveDown(y) && symbolValidator(chars[y + 1][x]))
         {
             symbolPosition = (x, y + 1);
-            symbolHere = true;
+            return true;
         }
         //lu
         else if (CanMoveUp(y) && CanMoveLeft(x) && symbolValidator(chars[y - 1][x - 1]))
         {
             symbolPosition = (x - 1, y - 1);
-            symbolHere = true;
+            return true;
         }
         //ru
         else if (CanMoveUp(y) && CanMoveRight(x, y) && symbolValidator(chars[y - 1][x + 1]))
         {
             symbolPosition = (x + 1, y - 1);
-            symbolHere = true;
+            return true;
         }
         //ld
         else if (CanMoveDown(y) && CanMoveLeft(x) && symbolValidator(chars[y + 1][x - 1]))
         {
             symbolPosition = (x - 1, y + 1);
-            symbolHere = true;
+            return true;
         }
         //rd
         else if (CanMoveDown(y) && CanMoveRight(x, y) && symbolValidator(chars[y + 1][x + 1]))
         {
             symbolPosition = (x + 1, y + 1);
-            symbolHere = true;
+            return true;
         }
-        return symbolHere;
+        return false;
     }
 
     #region navigate
