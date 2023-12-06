@@ -6,6 +6,7 @@ public record Mapping(long DestinationIndex, long SourceIndex, long Range);
 public class SeedMapper
 {
     public IEnumerable<long> Seeds { get; set; }
+    public IEnumerable<long> SeedLine { get; set; }
     public List<Mapping> Soils { get; set; } = new();
     public List<Mapping> Fertilizers { get; set; } = new();
     public List<Mapping> Water { get; set; } = new();
@@ -14,14 +15,42 @@ public class SeedMapper
     public List<Mapping> Humidities { get; set; } = new();
     public List<Mapping> Locations { get; set; } = new();
 
-    public SeedMapper(IEnumerable<string> lines)
+    public SeedMapper(IEnumerable<string> lines, bool seedPairs = false)
     {
+        var seeds = lines.ElementAt(0).Split(':')[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(s => Convert.ToInt64(s));
+        if (!seedPairs)
+        {
+            Seeds = seeds;
+        }
+        else
+        {
+            SeedLine = seeds;
+        }
         Map(lines);
+    }
+
+    public IEnumerable<long> GetSeedRangeFromPairs(IEnumerable<long> seeds)
+    {
+        var createdSeeds = new List<long>();
+        for (int i = 0; i <= seeds.Count() - 2; i = i + 2)
+        {
+            createdSeeds.AddRange(CreateSeeds(seeds.ElementAt(i), seeds.ElementAt(i + 1)));
+        }
+        return createdSeeds;
+    }
+
+    private IEnumerable<long> CreateSeeds(long start, long range)
+    {
+        var seeds = new List<long>();
+        for (long i = start; i < start + range; i++)
+        {
+            seeds.Add(i);
+        }
+        return seeds;
     }
 
     private void Map(IEnumerable<string> lines)
     {
-        Seeds = lines.ElementAt(0).Split(':')[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(s => Convert.ToInt64(s));
 
         List<Mapping> category = Soils;
 
