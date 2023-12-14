@@ -5,7 +5,7 @@ namespace AufgabenTests;
 [TestClass]
 public class UnitTest5
 {
-    private static string[] _lines;
+    private static string[] _lines = [];
     [ClassInitialize]
     public static void Init(TestContext testContext)
     {
@@ -51,5 +51,5 @@ public class UnitTest5
 
         Assert.AreEqual(46, mapper.Seeds.Min(seed => mapper.CreateSeedChain(seed).Last()));
     }
-    
+
 }
