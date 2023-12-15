@@ -24,8 +24,22 @@ public class UnitTest6
     public void MarginSampleTest()
     {
         var race = new Race(File.ReadAllLines("./../../../../Day06/sample.txt"));
-        Assert.AreEqual(288, SpeedCalculation.Margin(SpeedCalculation.GetPossibilites(race)));
+        Assert.AreEqual(288, SpeedCalculation.Margin(SpeedCalculation.GetRacePossibilites(race)));
     }
 
+    [TestMethod]
+    public void Race2ParsingTest()
+    {
+        var race = new Race2(File.ReadAllLines("./../../../../Day06/sample.txt"));
+        Assert.AreEqual(71530, race.Round.Time);
+        Assert.AreEqual(940200, race.Round.Distance);
+    }
+
+    [TestMethod]
+    public void Race2Possibilites()
+    {
+        var race = new Race2(File.ReadAllLines("./../../../../Day06/sample.txt"));
+        Assert.AreEqual(71503, SpeedCalculation.GetRoundPossibilty(race.Round));
+    }
 
 }

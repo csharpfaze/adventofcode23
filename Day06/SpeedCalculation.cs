@@ -1,9 +1,11 @@
 
+using System.Diagnostics;
+
 namespace Day06;
 
 public static class SpeedCalculation
 {
-    public static int Range(int raceDuration, int holdMs)
+    public static long Range(long raceDuration, long holdMs)
     {
         if (raceDuration < holdMs)
             return 0;
@@ -23,19 +25,26 @@ public static class SpeedCalculation
         return margin;
     }
 
-    public static IEnumerable<int> GetPossibilites(Race race)
+    public static IEnumerable<int> GetRacePossibilites(Race race)
     {
         var records = new List<int>();
         foreach (var round in race.Rounds)
         {
-            var record = 0;
-            for (int i = 0; i < round.Time; i++)
-            {
-                if (Range(round.Time, i) > round.Distance)
-                    record += 1;
-            }
-            records.Add(record);
+            records.Add(GetRoundPossibilty(round));
         }
         return records;
+    }
+
+    public static int GetRoundPossibilty(Round round)
+    {
+        var record = 0;
+        for (int i = 0; i < round.Time; i++)
+        {
+            var range = Range(round.Time, i);
+            if (range > round.Distance)
+                record++;
+        }
+
+        return record;
     }
 }

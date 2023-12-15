@@ -5,4 +5,8 @@ Console.WriteLine("Hello, World!");
 
 var race = new Race(File.ReadAllLines("./puzzle_input.txt"));
 
-System.Console.WriteLine(SpeedCalculation.Margin(SpeedCalculation.GetPossibilites(race)));
+System.Console.WriteLine(SpeedCalculation.Margin(SpeedCalculation.GetRacePossibilites(race)));
+
+
+var race2 = new Race2(File.ReadAllLines("./puzzle_input.txt"));
+System.Console.WriteLine(SpeedCalculation.GetRoundPossibilty(race2.Round));
